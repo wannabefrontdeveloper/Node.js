@@ -1,0 +1,51 @@
+<!--201935241 김지원-->
+<div class="container">
+    <meta charset="UTF-8">
+    <% console.log("Purchase Details:", purchaseDetails); %>
+    <% if (purchaseDetails && purchaseDetails.length > 0) { %>
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>상품</th>
+                    <th>상품명</th>
+                    <th>단가</th>
+                    <th>구매량</th>
+                    <th>총금액</th>
+                    <th>구매일</th>
+                    <th>취소여부</th>
+                </tr>
+            </thead>
+            <tbody>
+                <% for (var i=0; i < purchaseDetails.length; i++) { %>
+                    <tr>
+                        <td>
+                            <img src="<%= purchaseDetails[i].image %>" style="width:100px;height:100px;">
+                        </td>
+                        <td><%= purchaseDetails[i].name %></td>
+                        <td><%= purchaseDetails[i].price %></td>
+                        <td>
+                            <%= purchaseDetails[i].qty %>
+                        </td>
+                        <td>
+                            <%= purchaseDetails[i].price * purchaseDetails[i].qty %>
+                        </td>
+                        <td>
+                            <%= purchaseDetails[i].date %>
+                        </td>
+                        <td>
+                            <% if (purchaseDetails[i].cancel === 'N') { %>
+                                <a href="/purchase/cancel/<%= purchaseDetails[i].purchase_id %>">구매취소</a>
+                            <% } else { %>
+                                <span style="color: gray;">취소된 상품</span>
+                            <% } %>
+                        </td>
+                    </tr>
+                <% } %>
+            </tbody>
+            
+        </table>
+    <% } else { %>
+        <p>해당 상품의 상세 정보가 없습니다. </p>
+        <% console.log("No purchase details found."); %>
+    <% } %>
+</div>

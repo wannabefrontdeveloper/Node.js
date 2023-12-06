@@ -1,0 +1,72 @@
+<!--201935241 김지원-->
+<div class="container">
+    <meta charset="UTF-8">
+    <% if (merchandise.length > 0) { %>
+        <% for (var i=0; i < merchandise.length; i++) { %>
+            <form action="/purchase/detail_process" method="post">
+                <table class="table table-bordered">
+                    <tr>
+                        <td rowspan="5">
+                            <img src="<%= merchandise[i].image %>" style="width:400px;height:400px;">
+                        </td>
+                        <td>
+                            <h2>
+                                <%= merchandise[i].name %>
+                            </h2>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>가격: <%= merchandise[i].price %>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>브랜드: <%= merchandise[i].brand %>
+                        </td>
+                    </tr>
+                    <td id="quantityContainer<%= i %>">
+                        수량: 
+                        <input type="number" id="quantityInput<%= i %>" name="qty" value="1" min="1">
+                    </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div class="button-container">
+                                <% if (logined == 'YES') { %>
+                                    <!-- 장바구니와 결제 버튼은 같은 폼 안에 있어야 함 -->
+                                    <input type="hidden" name="mer_id" value="<%= merchandise[i].mer_id %>">
+                                    <input type="hidden" name="price" value="<%= merchandise[i].price %>">
+                                    <input type="hidden" name="date" value="<%= new Date().toISOString().slice(0, 10) %>">
+                                    <input type="hidden" name="point" value="<%= merchandise[i].price * 0.005 %>">
+                                    <input type="hidden" name="total" value="<%= merchandise[i].price %>">
+                                    <input type="hidden" name="payYN" value="N">
+                                    <input type="hidden" name="cancel" value="N">
+                                    <input type="hidden" name="refund" value="N">
+                                    
+                                    <button type="submit" class="btn btn-primary btn-sm">결제</button>
+                                    <!-- 장바구니 폼을 두 번째 버튼에서 전송 -->
+                                    <button formaction="/purchase/cart_process" class="btn btn-primary btn-sm">장바구니</button>
+                                <% } %>
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+            </form>
+        <% } %>
+    <% } else { %>
+        <p>해당 상품의 상세 정보가 없습니다.</p>
+    <% } %>
+</div>
+
+<!-- JavaScript를 사용하여 입력된 수량 값을 숨은 input에 설정합니다 -->
+<script>
+    document.querySelectorAll('[id^="quantityInput"]').forEach(function(input) {
+        input.addEventListener('input', function() {
+            // 해당 input 엘리먼트의 부모에서 찾기
+            var parentRow = this.closest('tr');
+            // 부모에서 hidden input 찾기
+            var hiddenQuantity = parentRow.querySelector('[id^="hiddenQuantity"]');
+            // hidden input에 값을 설정
+            hiddenQuantity.value = this.value;
+        });
+    });
+</script>

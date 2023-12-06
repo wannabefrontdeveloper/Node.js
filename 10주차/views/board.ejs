@@ -1,0 +1,48 @@
+<!--201935241 김지원-->
+<div class="container">
+  <h1><%= boardtypes.find(b => b.type_id == vu)?.title %></h1>
+
+  <div class="row">
+    <div class="col-md-12">
+      <table class="table table-bordered border-primary">
+        <thead>
+          <tr>
+            <th>작성자</th>
+            <th>제목</th>
+            <th>날짜</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% for (var i = 0; i < board.length; i++) { %>
+            <tr>
+              <td><%= board[i].loginid %></td>
+              <td>
+                <a href="/board/detail/<%= board[i].board_id %>/<%= pNum %>">
+                  <%= board[i].title %>
+                </a>
+              </td>
+              <td><%= board[i].date %></td>
+            </tr>
+          <% } %>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="col-md-12 text-end">
+      <a href="/board/create/<%= vu %>">
+        <button type="button" class="btn btn-info me-md-2">글쓰기</button>
+      </a>
+    </div>
+    <div class="col-md-12 text-center">
+      <div class="pagination">
+          <% var j = 1;
+          while (j <= totalPages) {
+              if(j == pNum) { %>
+                  <span style="font-weight : bold;"><%=j%></span>&nbsp;&nbsp;
+              <% } else { %>
+                  <span><a href="/board/view/<%= vu %>/<%=j%>"><%=j%></a></span>&nbsp;&nbsp;
+              <% }
+              j++
+          } %>
+      </div>
+  </div>

@@ -1,0 +1,29 @@
+<!--201935241 김지원-->
+<table class="table table-hover table-bordered">
+  <thead class="table-primary">
+      <tr>
+          <th>상품</th>
+          <th>상품 아이디</th>
+          <th>고객 아이디</th>
+          <th>상품명</th>
+          <th>단가</th>
+          <th>담은날</th>
+      </tr>
+  </thead>
+  <tbody>
+      <% cartDetails.forEach(function(cart) { %>
+      <tr>
+          <td><img src="<%= cart.merchandise_image %>" alt="Merchandise Image" style="width: 100px;"></td>
+          <td><%= cart.mer_id %></td>
+          <td><%= cart.loginid %></td>
+          <td><%= cart.merchandise_name %></td>
+          <td><%= cart.merchandise_price %></td>
+          <td><%= cart.date %></td>
+          <% if (vu === 'u') { %>
+          <td><a href="/purchase/cart/update/<%= cart.cart_id %>">수정</a></td>
+          <td><a href="/purchase/cart/delete/<%= cart.cart_id %>" onclick="return confirm('정말로 삭제하시겠습니까?')">삭제</a></td>
+          <% } %>
+      </tr>
+      <% }); %>
+  </tbody>
+</table>

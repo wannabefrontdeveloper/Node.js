@@ -1,0 +1,38 @@
+<!--201935241 김지원-->
+<div class="container">    
+  <h2>생일별 고객 분포 </h2>
+
+  <% var i = 0;
+     while(i < percentage.length) { %>
+      <input type="hidden" value="<%= percentage[i].rate %>" class="data" name="rate">
+      <input type="hidden" value="<%= percentage[i].birth %>" class="birth" name="rate">
+  <% i += 1 } %> 
+  <canvas id="graph" width="400" height="400" style="background-color: aliceblue"></canvas>
+
+  <script>
+      let data = document.getElementsByClassName("data");
+      let birth = document.getElementsByClassName("birth");
+      let colors = ["blue", "magenta","green", "yellow",  "red", "black", "white"];
+      let canvas = document.getElementById("graph");
+      let context = canvas.getContext("2d");
+
+      for(let i = 0; i < data.length; i++){
+          context.font = "20px malgun gothic";
+          context.fillStyle = colors[i];
+          context.fillText(birth[i].value + " | " + data[i].value + "%", 20, 20 + 20 * i);                    
+      }
+
+      let angle = 0;
+
+      for(let i = 0; i < data.length; i++){
+          context.fillStyle = colors[i];
+          context.beginPath();
+          context.moveTo(200, 250);  // 원 그래프의 중심 위치 조정
+          context.arc(200, 250, 150, angle, angle + (Math.PI * 2 * (parseFloat(data[i].value)/100)));
+          context.lineTo(200, 250);
+          context.fill();
+          
+          angle += Math.PI * 2 * (parseFloat(data[i].value)/100);
+      }   
+  </script>
+</div>

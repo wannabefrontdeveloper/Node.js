@@ -1,0 +1,31 @@
+<!--201935241 김지원-->
+<table class="table table-bordered border-primary">
+    <thead>
+        <tr>
+            <th>대분류</th>
+            <th>대분류명</th>
+            <th>소분류</th>
+            <th>소분류명</th>
+            <th>시작일</th>
+            <th>종료일</th>
+            <% if (vu === 'u') { %>
+                <th>수정</th>
+                <th>삭제</th>
+            <% } %>
+        </tr>
+    </thead>
+    <% for (var i = 0; i < code_tbl.length; i++) { %>
+        <tr>
+            <td><%= code_tbl[i].main_id %></td>
+            <td><%= code_tbl[i].main_name %></td>
+            <td><%= code_tbl[i].sub_id %></td>
+            <td><%= code_tbl[i].sub_name %></td>
+            <td><%= code_tbl[i].start %></td>
+            <td><%= code_tbl[i].end %></td>
+            <% if (vu === 'u') { %>
+                <td><a href="/code/update/<%= code_tbl[i].main_id %>/<%= code_tbl[i].sub_id %>">수정</a></td>
+                <td><a href="/code/delete/<%= code_tbl[i].main_id %>/<%= code_tbl[i].sub_id %>" onclick="return confirm('정말로 삭제하시겠습니까?')">삭제</a></td>
+            <% } %>
+        </tr>
+    <% } %>
+</table>

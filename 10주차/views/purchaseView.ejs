@@ -1,0 +1,35 @@
+<!--201935241 김지원-->
+<table class="table table-hover table-bordered">
+  <thead class="table-primary">
+      <tr>
+          <th>상품</th>
+          <th>상품 아이디</th>
+          <th>고객 아이디</th>
+          <th>상품명</th>
+          <th>가격</th>
+          <th>수량</th>
+          <th>총가격</th>
+          <th>날짜</th>
+          <th>취소여부</th>
+      </tr>
+  </thead>
+  <tbody>
+      <% purchaseDetails.forEach(function(purchase) { %>
+      <tr>
+          <td><img src="<%= purchase.merchandise_image %>" alt="Merchandise Image" style="width: 100px;"></td>
+          <td><%= purchase.mer_id %></td>
+          <td><%= purchase.loginid %></td>
+          <td><%= purchase.merchandise_name %></td>
+          <td><%= purchase.price %></td>
+          <td><%= purchase.qty %></td>
+          <td><%= purchase.price * purchase.qty %></td>
+          <td><%= purchase.date %></td>
+          <td><%= purchase.cancel %></td>
+          <% if (vu === 'u') { %>
+          <td><a href="/purchase/update/<%= purchase.purchase_id %>">수정</a></td>
+          <td><a href="/purchase/delete/<%= purchase.purchase_id %>" onclick="return confirm('정말로 삭제하시겠습니까?')">삭제</a></td>
+          <% } %>
+      </tr>
+      <% }); %>
+  </tbody>
+</table>

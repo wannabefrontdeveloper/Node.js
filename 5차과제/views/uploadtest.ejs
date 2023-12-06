@@ -1,0 +1,30 @@
+<!--201935241 김지원-->
+<!doctype html>
+<html>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<head>
+    <title></title> 
+    <meta charset="utf-8">
+    <link rel="icon" href="data:,">
+</head>
+<body>
+    <%=lg%>
+    <script>
+
+      function displayFileName() {
+        var fileName = $("#file").val()
+        alert(fileName)
+        $(".upload-name").val(fileName);
+      }
+    </script>
+    <form action = "/upload_process" method = "post", enctype="multipart/form-data">
+      <div class="filebox">
+        <input class = "upload-name" value="" placeholder="첨부파일">
+        <label for="file">파일찾기</label>
+        <input type="file" id="file" name="uploadFile" onchange="displayFileName()">
+        <p><input type="submit" value="upload"></p>
+      </div>
+    </form>
+
+</body>
+</html>

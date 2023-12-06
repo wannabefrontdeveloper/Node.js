@@ -1,0 +1,27 @@
+<!--201935241 김지원-->
+<table class="table table-bordered">
+    <% if (merchandise.length < 1) { %>
+        <tr>
+            <td>검색 결과가 없습니다.</td>
+        </tr>
+    <% } else { %>
+        <tr>
+            <% if (vu === 'u') { %>
+                <th>수정</th>
+                <th>삭제</th>
+            <% } %>
+        </tr>
+        <% for (var i = 0; i < merchandise.length; i++) { %>
+            <tr>
+                <td><a href="/shop/detail/<%= merchandise[i].mer_id %>"><img src="<%= merchandise[i].image %>" style="width:100px;height:100px;"></a></td>
+                <td><%= merchandise[i].name %></td>
+                <td>가격 : <%= merchandise[i].price %></td>
+                <td>브랜드 : <%= merchandise[i].brand %></td>
+                <% if (vu === 'u') { %>
+                    <td><a href="/merchandise/update/<%= merchandise[i].mer_id %>">수정</a></td>
+                    <td><a href="/merchandise/delete/<%= merchandise[i].mer_id %>" onclick="return confirm('정말로 삭제하시겠습니까?')">삭제</a></td>
+                <% } %>
+            </tr>
+        <% } %>
+    <% } %>
+</table>

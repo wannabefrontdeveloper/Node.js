@@ -1,0 +1,31 @@
+<!--201935241 김지원-->
+<div class="container">   
+    <% if (cart) { %>
+    <h2>구매정보 수정</h2>
+    <form action="/purchase/cartupdate_process" method="post">
+        <input type="hidden" name="id" value="<%= cart.cart_id %>">
+        <div class="mb-3">
+            <label class="form-label">상품 ID</label>
+            <input class="form-control" type="text" name="mer_id" value="<%= cart.mer_id %>">
+        </div>
+        <button class="btn btn-outline-primary btn-sm" type="submit">수정하기</button>
+    </form>
+    <% } else { %>
+    <h2>구매정보 입력</h2>
+    <form action="/purchase/cartcreate_process" method="post">
+        <div class="mb-3">
+            <label class="form-label">상품 ID</label>
+            <input class="form-control" type="text" name="mer_id">
+        </div>
+        <div class="mb-3">
+            <label class="form-label">수량</label>
+            <input class="form-control" type="text" name="qty">
+        </div>
+        <div class="mb-3">
+            <label class="form-label">단가</label>
+            <input class="form-control" type="text" name="price">
+        </div>
+        <button class="btn btn-outline-primary btn-sm" type="submit">입력하기</button>
+    </form>
+    <% } %>
+</div>

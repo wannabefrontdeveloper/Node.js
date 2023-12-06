@@ -1,0 +1,21 @@
+<!--201935241 김지원-->
+<table class="table table-bordered border-primary">
+    <thead>
+      <td>제목</td>
+      <td>페이지당 글 수</td>
+      <td>설명</td>
+      <td>일반 사용자 쓰기 가능 여부</td>
+      <td>댓글 가능 여부</td>
+    </thead> 
+    <% for(var i=0; i < boardtypes.length; i++) { %>
+      <tr>
+        <td><%= boardtypes[i].title %></td>
+        <td><%= boardtypes[i].numPerPage %></td> <!-- 페이지당 글 수 -->
+        <td><%= boardtypes[i].description %></td>
+        <td><%= boardtypes[i].write_YN %></td>
+        <td><%= boardtypes[i].re_YN %></td>
+        <td><a href="/board/type/update/<%= boardtypes[i].type_id%>">수정</a></td>
+        <td><a href="/board/type/delete/<%= boardtypes[i].type_id%>" onclick="return confirm('정말로 삭제하시겠습니까?')">삭제</a></td> 
+      </tr>
+    <% } %>
+  </table>

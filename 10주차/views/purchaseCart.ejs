@@ -1,0 +1,90 @@
+<!--201935241 김지원-->
+<div class="container">
+    <meta charset="UTF-8">
+    <% if (cartDetails && cartDetails.length > 0) { %>
+        <form id="purchaseForm" action="/purchase/checkout" method="post">
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th>구매선택</th>
+                        <th>상품</th>
+                        <th>상품명</th>
+                        <th>단가</th>
+                        <th>담은날</th>
+                        <th>수량</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <% for (var i=0; i < cartDetails.length; i++) { %>
+                        <tr>
+                            <td>
+                                <input type="checkbox" class="purchaseCheckbox" name="selectedItems[]" value="<%= cartDetails[i].mer_id %>">
+                            </td>
+                            <td>
+                                <img src="<%= cartDetails[i].image %>" style="width:100px;height:100px;">
+                            </td>
+                            <td>
+                                <%= cartDetails[i].name %>
+                            </td>
+                            <td>
+                                <%= cartDetails[i].price %>
+                            </td>
+                            <td>
+                                <%= cartDetails[i].date %>
+                            </td>
+                            <td>
+                                <input type="number" name="quantities[]" value="1" min="1">
+                            </td>
+                        </tr>
+                    <% } %>
+                </tbody>
+            </table>
+            <div style="text-align: right;">
+                <button type="submit" id="paymentButton" class="btn btn-primary">결제하기</button>
+            </div>
+        </form>
+    <% } else { %>
+        <p>장바구니가 비어있습니다.</p>
+    <% } %>
+    <script>
+        document.getElementById('paymentButton').addEventListener('click', function (event) {
+            event.preventDefault();
+    
+            var form = document.getElementById('purchaseForm');
+            var checkboxes = form.getElementsByClassName('purchaseCheckbox');
+            var selectedItems = [];
+            var quantities = [];
+    
+            for (var i = 0; i < checkboxes.length; i++) {
+                if (checkboxes[i].checked) {
+                    var quantityInput = checkboxes[i].closest('tr').querySelector('input[name="quantities[]"]');
+                    selectedItems.push(checkboxes[i].value);
+                    quantities.push(quantityInput.value);
+                }
+            }
+    
+            // 선택된 상품이 없다면 알림 또는 다른 처리를 수행할 수 있습니다.
+            if (selectedItems.length === 0) {
+                alert('구매할 상품을 선택해주세요.');
+                return;
+            }
+    
+            // 선택된 상품들을 hidden input에 추가
+            var hiddenItemsInput = document.createElement('input');
+            hiddenItemsInput.type = 'hidden';
+            hiddenItemsInput.name = 'selectedItems[]';
+            hiddenItemsInput.value = selectedItems.join(',');
+            form.appendChild(hiddenItemsInput);
+    
+            // 선택된 수량들을 hidden input에 추가
+            var hiddenQuantitiesInput = document.createElement('input');
+            hiddenQuantitiesInput.type = 'hidden';
+            hiddenQuantitiesInput.name = 'quantities[]';
+            hiddenQuantitiesInput.value = quantities.join(',');
+            form.appendChild(hiddenQuantitiesInput);
+    
+            // 폼 제출
+            form.submit();
+        });
+    </script>
+</div>

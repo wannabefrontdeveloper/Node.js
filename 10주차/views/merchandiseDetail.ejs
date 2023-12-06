@@ -1,0 +1,76 @@
+<!--201935241 김지원-->
+<div class="container">
+    <meta charset="UTF-8">
+    <% if (merchandise.length > 0) { %>
+        <% for (var i=0; i < merchandise.length; i++) { %>
+            <table class="table table-bordered">
+                <tr>
+                    <td rowspan="5">
+                        <img src="<%= merchandise[i].image %>" style="width:400px;height:400px;">
+                    </td>
+                    <td>
+                        <h2>
+                            <%= merchandise[i].name %>
+                        </h2>
+                    </td>
+                </tr>
+                <tr>
+                    <td>가격: <%= merchandise[i].price %>
+                    </td>
+                </tr>
+                <tr>
+                    <td>브랜드: <%= merchandise[i].brand %>
+                    </td>
+                </tr>
+                <tr>
+                    <td id="quantityContainer" style="display:none;">
+                        수량: <input type="number" id="quantityInput" value="1" min="1">
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <div class="button-container">
+                            <% if (logined == 'YES') { %>
+                                <!-- 수정: 함수 호출 시 mer_id 전달 -->
+                                <button class="btn btn-primary btn-sm" onclick="togglePurchase('<%= merchandise[i].mer_id %>')">구매</button>
+                                <form action="/purchase/cart_process" method="post">
+                                    <input type="hidden" name="mer_id" value="<%= merchandise[i].mer_id %>">
+                                    <!-- 수정: 함수 호출 시 mer_id 전달 -->
+                                    <button type="button" class="btn btn-primary btn-sm" onclick="addToCart('<%= merchandise[i].mer_id %>')">장바구니</button>
+                                </form>
+                            <% } %>
+                        </div>
+                    <% } %>
+                <% } else { %>
+                    <p>해당 상품의 상세 정보가 없습니다.</p>
+                <% } %>
+
+   <script>
+    function togglePurchase(mer_id) {
+        window.location.href = '/purchase/detail/' + mer_id;
+    }
+
+    // 수정: 함수에 mer_id 인자 추가
+    function addToCart(mer_id) {
+        alert("장바구니에 담겼습니다.");
+
+        // form 요소 생성
+        var form = document.createElement('form');
+        form.action = '/purchase/cart_process';
+        form.method = 'post';
+
+        // hidden input 요소 추가 (mer_id 전달)
+        var hiddenInput = document.createElement('input');
+        hiddenInput.type = 'hidden';
+        hiddenInput.name = 'mer_id';
+        hiddenInput.value = mer_id;
+
+        // form에 hidden input 추가
+        form.appendChild(hiddenInput);
+
+        // form을 body에 추가하고 submit
+        document.body.appendChild(form);
+        form.submit();
+    }
+</script>
+</div>
